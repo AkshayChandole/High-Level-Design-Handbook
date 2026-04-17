@@ -1,7 +1,5 @@
 # Scalability
 
-Discover how to achieve system scalability to handle increasing workloads without performance degradation. Compare vertical and horizontal scaling strategies, and apply techniques such as load balancing, caching, and sharding. Learn to make informed System Design decisions that balance cost, complexity, and growth.
-
 ## What is Scalability?
 
 Scalability is a system's ability to handle increasing workload without degrading latency, throughput, or reliability. For example, a search engine must support more concurrent users and larger indexes while keeping query latency low. A scalable system can increase capacity to meet demand without a noticeable drop in responsiveness or availability.
