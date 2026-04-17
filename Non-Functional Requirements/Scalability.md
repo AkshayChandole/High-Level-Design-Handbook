@@ -65,6 +65,9 @@ Instead of scaling up a single machine, you add more servers to distribute the w
 
 > **Note:** Horizontal scaling is ideal for systems expecting rapid growth or fluctuating workloads.
 
+<img width="547" height="312" alt="image" src="https://github.com/user-attachments/assets/7eafc165-483a-4fa9-b1a9-45d6c89f0e94" />
+
+
 ### Autoscaling
 
 Modern systems often use autoscaling rather than static scaling strategies.
@@ -81,17 +84,29 @@ Specific architectural techniques are fundamental to building scalable systems:
 
 Distributes user traffic evenly across servers, preventing overload and failure on any single node.
 
+<img width="642" height="332" alt="image" src="https://github.com/user-attachments/assets/9d8298f2-4336-426a-bed7-cafa41726bb6" />
+
+
 ### Caching and Content Delivery Networks (CDNs)
 
 Caching stores frequently accessed data in fast temporary storage, reducing database load. CDNs distribute static content (videos, images) via servers geographically closer to users.
+
+<img width="693" height="348" alt="image" src="https://github.com/user-attachments/assets/4cabcad0-dc05-4671-a087-edb4dd0c2492" />
+
 
 ### Data Replication and Sharding
 
 Replication duplicates data across servers for fault tolerance. Sharding partitions data across multiple databases to improve performance.
 
+<img width="738" height="396" alt="image" src="https://github.com/user-attachments/assets/ec91f5f3-bfc2-4de4-a66b-d96a6895ce7b" />
+
+
 ### Microservices Architecture
 
 Decomposes applications into independent services. Each service can scale independently based on specific demand.
+
+<img width="676" height="418" alt="image" src="https://github.com/user-attachments/assets/62ad6c8b-ac4e-472e-8a77-d7f11dce503c" />
+
 
 > **Note:** Implementing the right scalability techniques creates future-proof systems that handle increasing demand and new challenges.
 
