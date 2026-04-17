@@ -4,6 +4,9 @@ Large-scale applications utilize hundreds of servers and databases to serve bill
 
 Fault tolerance is a system's ability to continue operating even if one or more components (software or hardware) fail. While achieving 100% fault tolerance is practically impossible, systems aim to maximize persistence and minimize disruption.
 
+<img width="933" height="329" alt="image" src="https://github.com/user-attachments/assets/9c51a381-f79a-4301-9809-c6857aba94a2" />
+
+
 Fault tolerance relies on two key qualities:
 
 - **Availability:** The system remains accessible and receives client requests at any time.
@@ -20,6 +23,9 @@ Systems also implement failover strategies to manage downtime:
 - **Warm or cold failover:** Loads and starts the backup only when needed. This causes a delay but consumes fewer resources.
 
 > **Note:** Fault tolerance offers limited protection against software failures, which remain a major cause of outages.
+
+<img width="510" height="459" alt="image" src="https://github.com/user-attachments/assets/bcf696a3-90c2-41e8-9e13-9fd46f389ebc" />
+
 
 ---
 
@@ -49,6 +55,10 @@ Updating data across replicas presents a trade-off between consistency and avail
 
 This trade-off is central to the **CAP theorem**.
 
+<img width="871" height="696" alt="image" src="https://github.com/user-attachments/assets/3b4633ff-aa72-4244-9b8a-a0dd6f54e518" />
+
+
+
 ### Checkpointing
 
 Checkpointing periodically saves the system's state to stable storage. If a failure occurs, the system recovers by reloading the last saved state.
@@ -59,6 +69,9 @@ Checkpoints are classified based on the consistency of the global state:
 - **Inconsistent state:** Checkpoints across processes are uncoordinated, leading to discrepancies.
 
 Consider three processes (`i`, `j`, `k`) exchanging messages (`m1`, `m2`). Each process saves a snapshot (`C1,i`, `C1,j`, `C1,k`).
+
+<img width="1354" height="526" alt="image" src="https://github.com/user-attachments/assets/3c024d33-4ed0-4f1e-854f-292c27149301" />
+
 
 - In the **consistent state**, message `m1` is sent and received after the checkpoints are taken. The timeline is coherent.
 - In the **inconsistent state**, process `i` records receiving `m1`, but process `j` has not recorded sending it. This discrepancy creates an inconsistent state.
