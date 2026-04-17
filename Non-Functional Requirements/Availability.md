@@ -6,9 +6,9 @@ Availability is the percentage of time a service or infrastructure is accessible
 
 Mathematically, availability **A** is a ratio where a higher value indicates better reliability. It is calculated using the following formula:
 
-$$
-A\ (\%) = \frac{\text{Total Time} - \text{Amount Of Time Service Was Down}}{\text{Total Time}} \times 100
-$$
+```
+A (%) = (Total Time - Downtime) / Total Time × 100
+```
 
 Availability is typically measured in **"nines."** The table below illustrates the permitted downtime for various availability tiers:
 
