@@ -268,6 +268,10 @@ Our sequencer generates a unique 64-bit numeric ID (base-10). To create a more r
 
 ## Design diagram
 The diagram below shows the system’s high-level design.
+
+<img width="1171" height="590" alt="image" src="https://github.com/user-attachments/assets/27fa9957-1183-4953-8dbf-5e1f956be485" />
+
+
 ### Workflow
 
 Let's analyze the system in-depth and how the individual pieces fit together to provide the overall functionality. Given the functional requirements, the workflow for the abstract design above would be as follows.
