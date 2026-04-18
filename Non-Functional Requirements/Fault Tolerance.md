@@ -1,4 +1,6 @@
-# What is Fault Tolerance?
+# Fault Tolerance
+
+## What is Fault Tolerance?
 
 Large-scale applications utilize hundreds of servers and databases to serve billions of users. To ensure data safety and avoid redoing computationally intensive tasks, these systems must eliminate single points of failure.
 
