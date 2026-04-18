@@ -285,4 +285,51 @@ We have designed the core features of WhatsApp, including connection management,
 
 <img width="984" height="681" alt="image" src="https://github.com/user-attachments/assets/16287607-d674-46ec-bac7-e7475c9e6297" />
 
+## Evaluation of WhatsApp's Design
+
+### Requirements Compliance
+
+We ensure the design meets the following non-functional requirements:
+
+- **Low latency:** We minimize latency through geographically distributed WebSocket servers with local caching, Redis clusters layered over MySQL, and CDNs for media content.
+- **Consistency:** A FIFO messaging queue ensures strict ordering. To handle causality, the Sequencer assigns IDs with appropriate inference mechanisms. For offline users, the Mnesia database queues messages for sequential delivery upon reconnection.
+- **Availability:** We achieve high availability by provisioning sufficient WebSocket servers and replicating data. If a WebSocket connection fails, a load balancer re-establishes the session on a healthy server. Additionally, the Mnesia cluster uses primary-secondary replication to ensure durability.
+- **Security:** End-to-end encryption secures chat data against unauthorized access.
+- **Scalability:** High-performance engineering allows a single server to handle approximately 10 million connections. The architecture remains flexible, allowing horizontal scaling as load fluctuates.
+
+> **Q: In the event of a network partition, what should the system choose to compromise between consistency and availability?**
+>
+> According to the CAP theorem, a system must choose between consistency and availability during a network partition. In a messaging system like WhatsApp, correct message ordering is essential. Otherwise, the meaning of the conversation could change. Therefore, the system prioritizes consistency over availability during a network partition.
+
+#### Non-Functional Requirements Compliance Summary
+
+| Non-Functional Requirement | Approaches |
+| --- | --- |
+| **Minimizing latency** | Geographically distributed cache management systems and servers. CDNs. |
+| **Consistency** | Provide unique IDs to messages using Sequencer or other mechanisms. Use FIFO messaging queue with strict ordering. |
+| **Availability** | Provide multiple WebSocket servers and managers to establish connections between users. Replication of messages and data associated with users and groups on different servers. Follow disaster recovery protocols. |
+| **Security** | End-to-end encryption. |
+| **Scalability** | Performance tuning of servers. Horizontal scalability of services. |
+
+### Trade-offs
+
+Two major trade-offs characterize the proposed WhatsApp design:
+
+- Consistency vs. availability
+- Latency vs. security
+
+#### The Trade-off Between Consistency and Availability
+
+According to the CAP theorem, a distributed system facing network partitions must choose between consistency and availability. Since message ordering is essential in this design, we prioritize consistency.
+
+#### The Trade-off Between Latency and Security
+
+Real-time messaging requires low latency, but transmitting messages without encryption introduces security risks. The system prioritizes security by using end-to-end encryption, despite the additional computational overhead. This overhead is most noticeable when handling multimedia content. Encrypting large files on the sender's device and decrypting them on the receiver's device consumes additional CPU resources and increases latency.
+
+## Summary
+
+In this chapter, we designed a WhatsApp messenger. We identified requirements, estimated resources, and defined the high-level architecture. We then detailed specific components and evaluated the design against non-functional requirements and trade-offs.
+
+This problem demonstrated how to optimize general-purpose computational resources for specific use cases. Notably, WhatsApp optimized its software stack to handle a massive number of connections on commodity servers.
+
 
