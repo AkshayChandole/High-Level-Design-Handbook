@@ -47,6 +47,8 @@ URL shortening services also have some drawbacks:
 
 > Note: Predictable short URLs create a security risk because attackers can identify patterns and attempt to guess private links. To mitigate this risk, the system avoids sequential IDs. Instead, it generates random identifiers. This approach produces unique short URLs that are difficult to predict.
 
+<img width="1075" height="687" alt="image" src="https://github.com/user-attachments/assets/ea619efd-6383-485d-8a2c-97d402cea146" />
+
 ## Resource Estimation
 
 Before designing the system, we need to estimate the required resources. These estimations are based on the following assumptions.
@@ -292,6 +294,9 @@ The server decodes the custom short URL back to its base-10 equivalent and marks
 
 This approach improves availability by storing the used/unused ID state in a scalable NoSQL database rather than in memory.
 
+<img width="1032" height="436" alt="image" src="https://github.com/user-attachments/assets/1c6af8d2-bbb1-4fe8-991b-e5b42ce5b162" />
+
+
 The process is simple:
 
 1. Newly generated IDs are added to an "unused" list.
@@ -503,6 +508,9 @@ The sequencer assigns ranges of unique IDs to different servers. If a server iss
 | **Readability** | Base-58 encoder for short URL generation. Removal of non-alphanumeric characters. Removal of look-alike characters. |
 | **Latency** | Unnoticeable delay in the overall operation. MongoDB for low latency and high throughput reads. Distributed cache to minimize service delays. |
 | **Unpredictability** | Randomly selecting and associating an ID to each request from the pool of unused and readily available unique IDs. |
+
+<img width="858" height="639" alt="image" src="https://github.com/user-attachments/assets/37d00294-bf17-4041-8e5c-45c5d0ca6aa7" />
+
 
 ## Conclusion
 
