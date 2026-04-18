@@ -338,21 +338,14 @@ To convert a base-10 ID to a Base-58 string, we repeatedly use the modulus opera
 
 **Example:** Let's assume the unique ID is `2468135791013`.
 
-$$2468135791013 \  \%   \ 58 = 17$$
-
-$$42554065362  \ \% \  58 = 6$$
-
-$$733690782  \ \% \  58 = 4$$
-
-$$12649841  \ \% \  58 = 41$$
-
-$$218100  \ \% \  58 = 20$$
-
-$$3760  \ \% \  58 = 48$$
-
-$$64  \ \% \  58 = 6$$
-
-$$1  \ \% \  58 = 1$$
+`2468135791013 % 58 = 17`  
+`42554065362 % 58 = 6`  
+`733690782 % 58 = 4`  
+`12649841 % 58 = 41`  
+`218100 % 58 = 20`  
+`3760 % 58 = 48`  
+`64 % 58 = 6`  
+`1 % 58 = 1`
 
 Writing the remainders in reverse order of calculation gives us the following indexes:
 
