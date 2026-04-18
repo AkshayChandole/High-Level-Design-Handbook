@@ -326,6 +326,9 @@ According to the CAP theorem, a distributed system facing network partitions mus
 
 Real-time messaging requires low latency, but transmitting messages without encryption introduces security risks. The system prioritizes security by using end-to-end encryption, despite the additional computational overhead. This overhead is most noticeable when handling multimedia content. Encrypting large files on the sender's device and decrypting them on the receiver's device consumes additional CPU resources and increases latency.
 
+<img width="867" height="389" alt="image" src="https://github.com/user-attachments/assets/fe673ad2-0328-4f10-93f2-41af41da8cde" />
+
+
 ## Summary
 
 In this chapter, we designed a WhatsApp messenger. We identified requirements, estimated resources, and defined the high-level architecture. We then detailed specific components and evaluated the design against non-functional requirements and trade-offs.
