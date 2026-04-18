@@ -219,6 +219,9 @@ This API retrieves documents or media using the file ID.
 
 Each active device establishes a WebSocket connection to the messaging infrastructure. The WebSocket servers maintain persistent connections with online users. To support billions of users, connections are distributed across a cluster of WebSocket servers. Each server maintains a session for every active connection. A **WebSocket manager** maintains the mapping between users, active connections, and servers. This mapping is stored in a **Redis cluster**.
 
+<img width="823" height="446" alt="image" src="https://github.com/user-attachments/assets/7ab06769-95c9-462c-95fd-df637692cb01" />
+
+
 > **Q: Why is WebSocket preferred over HTTP(S) for client-server communication?**
 >
 > HTTP(S) doesn't keep the connection open for the server to send frequent data to a client. With HTTP(S), a client constantly requests updates from the server (commonly called polling), which is resource-intensive and causes latency. WebSocket maintains a persistent connection between the client and server. It transfers data to the client immediately whenever it becomes available, providing a bidirectional connection used as a common solution to send asynchronous updates from a server to a client.
@@ -228,6 +231,9 @@ Each active device establishes a WebSocket connection to the messaging infrastru
 The WebSocket manager maintains a mapping between each active user and the server connection handling that user. When a user reconnects to a different WebSocket server, the mapping is updated in the data store.
 
 The WebSocket server communicates with the **Message service**, which manages message storage using a **Mnesia database cluster**. The Message service acts as an interface for other services to store and retrieve messages. It deletes messages after a configurable period and provides APIs to filter messages by user ID or message ID.
+
+<img width="826" height="628" alt="image" src="https://github.com/user-attachments/assets/867e89ce-3dba-41f1-b641-306f42c839e7" />
+
 
 Assume that User A wants to send a message to User B, and both users are connected to different WebSocket servers. The system performs the following steps:
 
@@ -253,6 +259,9 @@ The media transfer process consists of the following steps:
 3. The asset service sends the media ID to the receiver via the message service. The receiver uses this ID to download the content.
 4. If specific content receives high traffic, the asset service loads it onto a CDN.
 
+<img width="1020" height="551" alt="image" src="https://github.com/user-attachments/assets/d73418c1-00f3-4c5f-943a-605a0ab2df95" />
+
+
 ### Support for Group Messages
 
 WebSocket servers track active users, not groups. Since group members may have mixed online statuses, the system uses three components to deliver group messages:
@@ -269,7 +278,11 @@ Suppose User A sends a message to Group/A. The flow is as follows:
 4. The group message handler retrieves Group/A member data from the group service.
 5. The handler delivers the message to each member following the standard WebSocket delivery process.
 
-### Putting Everything Together
+<img width="1016" height="503" alt="image" src="https://github.com/user-attachments/assets/662546e3-ac74-4622-aaff-f77bcb6afaca" />
 
+### Putting Everything Together
 We have designed the core features of WhatsApp, including connection management, text and media messaging, group chat, and encryption.
+
+<img width="984" height="681" alt="image" src="https://github.com/user-attachments/assets/16287607-d674-46ec-bac7-e7475c9e6297" />
+
 
