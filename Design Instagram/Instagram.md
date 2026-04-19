@@ -100,6 +100,9 @@ $$\text{Servers needed at peak load} = \frac{\text{Number of requests/second}}{\
 
 We will use the following building blocks in our design:
 
+<img width="791" height="258" alt="image" src="https://github.com/user-attachments/assets/e1d6480c-6fa5-4a61-aee1-0de5071990e5" />
+
+
 - **Load balancer:** Distributes requests across available servers.
 - **Database:** Stores user metadata and relationships.
 - **Blob storage:** Stores media content like photos and videos.
@@ -107,9 +110,13 @@ We will use the following building blocks in our design:
 - **Cache:** Stores frequently accessed content.
 - **CDN:** Delivers content to end-users, reducing latency and server load.
 
+
 # [High-Level Design](#high-level-design)
 
 The system must support uploading, viewing, and searching media. Additionally, users can follow one another. This requires a robust storage layer to persist media and a retrieval mechanism to fetch data on demand.
+
+<img width="682" height="560" alt="image" src="https://github.com/user-attachments/assets/c41382ac-5c65-4284-9364-eb5f2f01f181" />
+
 
 ## [API Design](#api-design)
 
@@ -254,9 +261,14 @@ The schema requires the following tables:
 - **Photos:** Stores all photo-related information such as ID, location, caption, time of creation, and so on. Includes a `user_id` as a foreign key from the Users table.
 - **Videos:** Stores video metadata (ID, location, caption, creation time). Includes a `user_id` as a foreign key.
 
+
+
 > **Q: Where should we store the photos and videos?**
 >
 > We'll store the photos and videos in a blob store (like S3) and save the path to each photo or video in the table, as it's more efficient to store larger data in a distributed storage.
+
+<img width="1218" height="420" alt="image" src="https://github.com/user-attachments/assets/1448fc09-453f-4f40-bced-12a657a14d1b" />
+
 
 ### [Data Estimation](#data-estimation)
 Let’s estimate the amount of data stored in each table.
@@ -281,6 +293,7 @@ We expand the design with the following components:
 - **Relational database:** Stores metadata and user information.
 - **Blob storage:** Stores media files (photos and videos).
 
+<img width="809" height="468" alt="image" src="https://github.com/user-attachments/assets/ce16981a-a889-462c-8553-026f27e6cd66" />
 
 
 ## [Upload, View, and Search a Photo](#upload-view-and-search-a-photo)
