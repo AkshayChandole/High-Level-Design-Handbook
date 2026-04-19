@@ -4,6 +4,9 @@
 
 Instagram is a social networking service for sharing photos and short videos. Users upload media with captions, hashtags, and geotags that improve discoverability in search and tag feeds. Posts are delivered to followers' feeds. Public posts can be discovered through hashtags and location feeds, while private profiles limit visibility to approved followers.
 
+<img width="268" height="402" alt="image" src="https://github.com/user-attachments/assets/a23886f4-99d2-4750-b33a-209d9d5c7411" />
+
+
 > **Note:** As the user base grows, Instagram must continuously optimize its backend to handle millions of daily active users. Efficiently managing growth and predicting resource requirements are essential for scalability.
 
 Expanding user counts require increased server, database, and CDN capacity.
