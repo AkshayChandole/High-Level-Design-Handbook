@@ -281,6 +281,9 @@ We expand the design with the following components:
 - **Relational database:** Stores metadata and user information.
 - **Blob storage:** Stores media files (photos and videos).
 
+<img width="977" height="716" alt="image" src="https://github.com/user-attachments/assets/22e231db-ce02-4f83-ab6b-2da97f7f5701" />
+
+
 ## [Generate a Timeline](#generate-a-timeline)
 
 Generating a user-specific timeline is a core feature. We analyze three strategies to determine the best approach.
@@ -291,6 +294,11 @@ This approach is known as **"fan-out on load."** When a user opens Instagram, th
 
 **Drawback:** This approach creates high latency because the timeline is generated on-demand every time the app opens. We can mitigate this by pre-generating timelines offline for active users.
 
+<img width="929" height="597" alt="image" src="https://github.com/user-attachments/assets/a25019e6-b386-4bc1-b9fa-ea845526d50d" />
+
+<img width="948" height="592" alt="image" src="https://github.com/user-attachments/assets/77180a5a-0490-4cc5-8f91-197ee4e62239" />
+
+
 > **Q: What are the shortcomings of the pull approach?**
 >
 > Instagram operates as a read-heavy system. Many users do not create posts and primarily consume content from others. As a result, many requests to fetch recent posts from followed accounts return no new content. The system should therefore be optimized for read-heavy workloads rather than write-heavy ones.
@@ -300,6 +308,9 @@ This approach is known as **"fan-out on load."** When a user opens Instagram, th
 The push approach is also known as **"fan-out on write."** When a user creates a post, the system distributes it to the timelines of all followers. Unlike the pull approach, follower timelines are precomputed at write time.
 
 **Benefit:** Read latency is minimal because the data is ready when the user opens the app. It also eliminates wasted read requests for users who haven't posted recently.
+
+<img width="925" height="633" alt="image" src="https://github.com/user-attachments/assets/e203517e-8f29-40a0-98a4-b91bdcad44c3" />
+
 
 > **Q: What are the shortcomings of the push approach?**
 >
@@ -314,6 +325,9 @@ To balance the trade-offs, we categorize users based on follower count:
 
 The timeline service aggregates data by pulling from celebrity accounts and reading the pre-pushed feed for standard accounts.
 
+<img width="756" height="586" alt="image" src="https://github.com/user-attachments/assets/e2dc29a0-051f-4a80-9a0c-8118f5837d58" />
+
+
 ### [Timeline Storage](#timeline-storage)
 
 We store the user's timeline in a key-value store. The key is the `userID`, and the value is the timeline content (a list of post links). If the value size exceeds the store's limit (e.g., a few MBs), we can store the actual timeline data in a blob store and keep a reference link in the key-value store.
@@ -327,6 +341,9 @@ We can add a "Story" feature where photos expire after 24 hours. We implement th
 We integrate a CDN (content delivery network) to serve static media like images and videos. This ensures high availability and low latency for millions of concurrent users.
 
 The load balancer routes read requests to the nearest CDN edge server. If the content is not found, the request forwards to the Read Application Server.
+
+<img width="1068" height="788" alt="image" src="https://github.com/user-attachments/assets/587b7603-828f-4bdf-aad2-deb8ae6d8233" />
+
 
 > **Q: How can we count millions of interactions (like or view) on a celebrity post?**
 >
