@@ -281,8 +281,16 @@ We expand the design with the following components:
 - **Relational database:** Stores metadata and user information.
 - **Blob storage:** Stores media files (photos and videos).
 
-<img width="977" height="716" alt="image" src="https://github.com/user-attachments/assets/22e231db-ce02-4f83-ab6b-2da97f7f5701" />
 
+
+## [Upload, View, and Search a Photo](#upload-view-and-search-a-photo)
+
+- **Upload flow:** The client sends a photo to the load balancer, which routes it to an application server. The server stores the photo in the database (blob storage) and sends a success or error notification to the user.
+- **View and search flow:** When a client requests to view or search for a photo, the application server fetches the matching content from the database and serves it to the user.
+- **Service splitting:** Since read requests (views) significantly outnumber write requests (uploads), we split the architecture into separate read and write services. This allows us to scale the read infrastructure independently to handle high traffic.
+- **Optimization:** We introduce caching to speed up reads for millions of users. We also implement lazy loading. This minimizes latency and bandwidth usage by only loading content as the user scrolls.
+
+<img width="977" height="716" alt="image" src="https://github.com/user-attachments/assets/22e231db-ce02-4f83-ab6b-2da97f7f5701" />
 
 ## [Generate a Timeline](#generate-a-timeline)
 
