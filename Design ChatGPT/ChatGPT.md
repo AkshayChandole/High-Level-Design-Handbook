@@ -8,6 +8,9 @@ ChatGPT is an advanced conversational application built on a sophisticated AI la
 - Proposing innovative ideas.
 - Composing clear, well-structured text.
 
+<img width="781" height="468" alt="image" src="https://github.com/user-attachments/assets/112fd5a1-666e-4362-b54f-823044aad82e" />
+
+
 ChatGPT-like systems are notable for interpreting incomplete or ambiguous inputs to provide relevant, context-aware responses. Instead of relying on predefined answers, these systems use generative AI and large language models to analyze intent and patterns.
 
 ## Requirements
@@ -28,6 +31,9 @@ The backend design must address the following functional and non-functional requ
 - **Reliability:** Generate stable and predictable responses under varying conditions.
 - **Low latency:** Minimize response times through efficient inference and caching.
 - **Privacy and security:** Protect user data and ensure compliance with privacy standards.
+
+<img width="907" height="376" alt="image" src="https://github.com/user-attachments/assets/9e0e68f8-d192-430c-a4c7-92e61747e88f" />
+
 
 ## Resource Estimation
 
@@ -106,6 +112,9 @@ Additional components, such as an API gateway and ZooKeeper, are also critical.
 
 The high-level design illustrates how the system handles real-time conversations. The following workflow outlines the component interactions:
 
+<img width="971" height="530" alt="image" src="https://github.com/user-attachments/assets/f3712b73-88a5-42ff-a208-86b66d694e03" />
+
+
 1. **User input:** The user submits a text prompt via the interface or API.
 2. **Gateway processing:** The API gateway authenticates the request, applies rate limiting, manages the session, and forwards the prompt to the model server.
 3. **Model inference:** The AI model processes the prompt using conversation history. Responses are cached for retrieval and logged in the database.
@@ -125,6 +134,9 @@ User feedback is essential for fine-tuning the system, enhancing its accuracy, a
 ## Detailed Design
 
 Requests are routed through the API gateway to a load balancer, which distributes traffic across application servers. The system relies on the following core components:
+
+<img width="1226" height="671" alt="image" src="https://github.com/user-attachments/assets/380f7af1-a84e-4176-b6e6-77ea5c740c73" />
+
 
 - **Pre-processing (NLU service):** Extracts meaning, intent, and entities from user input. It converts text into numerical embeddings to capture semantic relationships.
 - **Model server:** The core processing unit hosting AI models. It generates responses based on user queries.
