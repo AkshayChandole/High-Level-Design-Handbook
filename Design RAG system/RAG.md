@@ -6,6 +6,9 @@ Retrieval-augmented generation (RAG) is an advanced AI technique that enhances t
 
 LLMs rely on patterns learned from vast datasets but do not have real-time access to up-to-date information. This can result in responses not aligned with the most current data or context. RAG mitigates this issue by retrieving relevant information at query time, ensuring the generated content is accurate and contextually relevant.
 
+<img width="840" height="613" alt="image" src="https://github.com/user-attachments/assets/ce4fe230-40aa-4a4d-b587-9a6b25d2c25e" />
+
+
 RAG-based systems have found applications across various domains, including:
 
 - **Chatbots and virtual assistants:** Enhancing interactions by responding based on the latest information.
@@ -56,6 +59,9 @@ A RAG system enhances LLMs by integrating external information retrieval mechani
 
 - **Generator module:** Utilizing the augmented prompts to generate informed responses.
 
+<img width="1014" height="585" alt="image" src="https://github.com/user-attachments/assets/89d298d5-c996-4f3b-b211-dcbedbcbe026" />
+
+
 These components enable the RAG-based system to retrieve and integrate external information, which improves LLM performance.
 
 ## [Detailed Workflow of a RAG System](#detailed-workflow-of-a-rag-system)
@@ -72,6 +78,9 @@ Data indexing is the foundational step where raw data is transformed into a stru
 
 - **Vector storage:** The generated embeddings are stored in a vector database, which is optimized for rapid similarity searches.
 
+<img width="831" height="603" alt="image" src="https://github.com/user-attachments/assets/fb2b0dfd-ee40-4fae-a9d4-248295f27fc3" />
+
+
 Efficient data indexing ensures that the retriever can quickly access pertinent information, thereby enhancing the system's responsiveness.
 
 ### [Retriever Mechanism](#retriever-mechanism)
@@ -84,6 +93,9 @@ The retriever mechanism is responsible for fetching relevant documents or data p
 
 - **Document ranking:** The retrieved documents are ranked based on their relevance scores to prioritize the most pertinent information.
 
+<img width="1071" height="437" alt="image" src="https://github.com/user-attachments/assets/0316b1e8-4acd-4387-8ed6-6853003c3fe8" />
+
+
 An effective retrieval mechanism enables the system to access and use the most relevant external information, which improves the quality of the generated responses.
 
 ### [Augmentation Process](#augmentation-process)
@@ -93,6 +105,9 @@ Once relevant documents are retrieved, they are combined with the user's origina
 - **Contextual integration:** The content of the retrieved documents is integrated with the user's query to provide comprehensive context.
 
 - **Prompt engineering:** The combined input is structured into a prompt format that effectively guides the LLM in generating a response.
+
+<img width="898" height="340" alt="image" src="https://github.com/user-attachments/assets/a5499b3f-4375-447e-b77e-15eece63aca8" />
+
 
 The augmentation process ensures that the LLM has access to external knowledge, enabling it to produce accurate and contextually enriched responses.
 
@@ -123,6 +138,9 @@ Once text is extracted, it must be segmented into manageable units or chunks to 
 - **Semantic chunking:** Segments text based on natural language structures such as sentences or paragraphs, preserving semantic integrity. This approach often yields better retrieval results, as it maintains the context within each chunk.
 
 - **Overlapping chunking:** Introduces overlaps between consecutive chunks to ensure that contextual information is retained across boundaries. This technique is particularly useful when the exact query context is unpredictable, as it increases the likelihood that relevant information is captured within at least one chunk.
+
+<img width="638" height="536" alt="image" src="https://github.com/user-attachments/assets/5ad4d323-dfd0-448b-bef8-4263af45af43" />
+
 
 Selecting an appropriate chunking strategy is crucial, as it directly impacts the system's ability to retrieve relevant information and generate accurate responses.
 
@@ -304,6 +322,9 @@ The system is organized into three major subsystems:
 
 - **Response generation and quality control system:** Takes the retrieved documents and the original query, feeds them into an LLM, and ensures the final output is accurate, well-formatted, and appropriate.
 
+<img width="1169" height="517" alt="image" src="https://github.com/user-attachments/assets/eaadaff2-1fb2-49c6-9681-1de3ece1e3a0" />
+
+
 ### [Achieving Functional Requirements](#achieving-functional-requirements)
 
 It is useful to connect each subsystem to a concrete functional requirement:
@@ -329,6 +350,9 @@ This subsystem transforms a user query into a vector embedding that captures the
 
 - **Embedding cache:** Frequently repeated queries produce the same embedding every time. Instead of re-encoding, the cache stores and retrieves precomputed embeddings, reducing latency and computational cost.
 
+<img width="998" height="555" alt="image" src="https://github.com/user-attachments/assets/4d12b728-a8eb-46c2-9c0a-e704f02bd74f" />
+
+
 > **Flow:** Once the query embedding is ready, it is passed to the knowledge management system, which uses it to search the indexed document store.
 
 ### [2. Knowledge Management System](#2-knowledge-management-system)
@@ -340,6 +364,9 @@ This subsystem manages the document knowledge base, including file ingestion, ve
 - **Document embedding service:** Each text chunk is passed through a transformer model to produce a vector embedding. GPU or quantized inference is used for speed. Each vector is stored alongside the original text and its metadata (source, date, author) to support accurate retrieval and attribution.
 
 - **Document indexing and search service:** This service stores all document embeddings in a vector database such as Faiss or Pinecone and handles the retrieval search at query time. When a query embedding is received, the service retrieves the most similar document vectors using cosine similarity or inner product search. The system can also combine semantic vector search with keyword-based search to improve recall, followed by ranking and returning the top matching passages.
+
+<img width="1080" height="708" alt="image" src="https://github.com/user-attachments/assets/c361e905-46e8-4c1c-8007-e052ab0eaa6a" />
+
 
 - **Metadata filter service:** Not every use case should search the entire corpus. This service applies pre-retrieval filters, by date, author, domain, or source type, to narrow the search space before vector similarity is computed. This is especially useful for applications that require recency (e.g., only articles from the past month) or source trust (e.g., only verified documents).
 
@@ -364,9 +391,15 @@ Once the relevant documents are retrieved, this subsystem assembles the final re
 
 - **Prompt customization service:** Different deployments, healthcare, legal, and customer service require different response styles. This service injects domain-specific instructions or user preferences into the prompt to control tone, structure, or content boundaries. Prompt templates and user settings are stored in a key-value or document store.
 
+<img width="987" height="746" alt="image" src="https://github.com/user-attachments/assets/0c003bd6-83df-493b-9567-44c837d17c3c" />
+
+
 - **Response generator:** The LLM runs here, on GPU hardware, consuming the assembled and customized prompt to produce the final answer. The service exposes configurable parameters such as temperature (controls randomness vs. determinism), maximum token limits, and streaming output for low-latency responses. It logs outputs, usage statistics, and latency metrics to a time-series or analytics database.
 
 - **Quality control service:** The generated response is reviewed before it reaches the user. This service performs three functions: it corrects grammar and applies formatting (headings, bullet points) using lightweight NLP tools; it checks for hallucinations, policy violations, or inappropriate content using moderation rules and optionally fact-verification APIs; and it collects user feedback (accept/reject, ratings) to support fine-tuning of the system over time. Moderation policies and feedback are stored in databases like PostgreSQL or MongoDB.
+
+<img width="1222" height="939" alt="image" src="https://github.com/user-attachments/assets/8c180290-390a-4aff-a37b-6cdd94b18a93" />
+
 
 The table below summarizes the storage technologies used in this subsystem:
 
