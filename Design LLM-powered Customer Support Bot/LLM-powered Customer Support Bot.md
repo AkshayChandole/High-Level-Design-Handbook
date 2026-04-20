@@ -19,6 +19,9 @@ The following functional requirements define the system's core behaviour:
 - **Human escalation:** The system must detect when it cannot confidently resolve a query and gracefully hand off the conversation to a human agent with full context preserved.
 - **Feedback collection:** The system should collect user ratings on responses to build a signal for improving response quality over time.
 
+<img width="799" height="317" alt="image" src="https://github.com/user-attachments/assets/d585eb48-235b-4d54-a631-d074feb28efa" />
+
+
 These functional requirements ensure the bot is not just conversational but genuinely useful.
 
 ### Non-Functional Requirements
@@ -89,6 +92,9 @@ $$\text{Outgoing bandwidth} = \text{Responses/sec} \times \text{Response size} =
 
 Designing this system requires a set of well-defined building blocks, each addressing a specific concern surfaced by our requirements and resource estimates.
 
+<img width="737" height="231" alt="image" src="https://github.com/user-attachments/assets/0511b01d-428f-45ca-9de1-9703459decf2" />
+
+
 The following components will form the backbone of the architecture:
 
 - **Load balancers:** Distribute incoming user requests across application and inference servers to prevent hotspots.
@@ -102,6 +108,9 @@ The following components will form the backbone of the architecture:
 Production support bots quickly become outdated as product details and policies change, leading to inaccurate responses and declining user satisfaction. Systems must continuously use up-to-date knowledge while controlling LLM costs.
 
 The following high-level design uses Retrieval-Augmented Generation (RAG) with cost-aware routing to deliver accurate, context-rich responses. The workflow is as follows: a user submits a query through a web or mobile interface, which is handled by the API gateway for authentication, rate limiting, and session tracking before being forwarded to the backend. The RAG pipeline retrieves relevant knowledge from a vector database and augments the prompt, which is then passed to the LLM to generate a response. The response goes through content moderation before being returned to the user, and the conversation is logged with feedback collected.
+
+<img width="983" height="654" alt="image" src="https://github.com/user-attachments/assets/b4ed201d-6eb4-4f8d-b00f-e91478263fc3" />
+
 
 This architecture ensures the system always references up-to-date product knowledge rather than relying solely on what the model learned during training.
 
@@ -197,6 +206,9 @@ submitFeedback(session_id, user_id, message_id, rating, comment)
 ## Detailed Design
 
 The high-level architecture shows what the system does. The detailed design reveals how it does it, and this is where the real engineering complexity lives. Each component must be carefully orchestrated to handle concerns that only surface at scale, including LLM performance degradation over time, cost management across model tiers, and seamless human-agent escalation when the bot reaches its limits.
+
+<img width="984" height="823" alt="image" src="https://github.com/user-attachments/assets/46cb14e5-a719-436d-aeeb-e63f848566e7" />
+
 
 ### Components
 
