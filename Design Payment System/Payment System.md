@@ -10,6 +10,9 @@ A payment system handles the transfer of funds for purchases. It supports multip
 
 The payment process involves multiple entities. When a customer pays with a card, the system must verify the cardholder, process the payment, and validate the transaction.
 
+<img width="921" height="760" alt="image" src="https://github.com/user-attachments/assets/d3aaf09d-d5af-4935-9cc3-f98bdbac6c86" />
+
+
 The table below details the roles of different entities in the system:
 
 | Entities | Description |
@@ -132,6 +135,9 @@ $$\text{Servers needed at peak load} = \frac{50\text{ million}}{64{,}000} \appro
 
 The payment system requires specific components, including essential services such as payment gateways, risk checks, and reconciliation systems.
 
+<img width="438" height="236" alt="image" src="https://github.com/user-attachments/assets/3165346a-5590-471a-a8bc-64565eb36539" />
+
+
 - **Databases:** Store user payment events and transaction data.
 
 - **Load balancers:** Distribute incoming requests across available servers.
@@ -139,6 +145,9 @@ The payment system requires specific components, including essential services su
 - **Pub-sub systems:** Decouple services like payment processing, wallets, and ledgers.
 
 ## [High-level Design](#high-level-design)
+
+<img width="1053" height="436" alt="image" src="https://github.com/user-attachments/assets/20fcfa9a-64ba-4783-b4d4-c1b52395c380" />
+
 
 1. A customer clicks the pay button on a merchant's website, which triggers the payment service.
 
@@ -243,9 +252,16 @@ getTransactionHistory(customer_id, start_date, end_date)
 
 Each of the above APIs requires database support. Let's understand how the payment system stores different types of information:
 
+<img width="1252" height="938" alt="image" src="https://github.com/user-attachments/assets/40ffe52c-bb20-49b5-8abb-8578cf440d0e" />
+
+
+
 ## [Detailed Design](#detailed-design)
 
 The process begins when a customer provides their payment details on a merchant's site. These details include the card number, cardholder name, CVV/CVC, and expiration date. Before payment, the user authentication service verifies the customer's identity. Once authenticated, clicking the pay button triggers the payment service.
+
+<img width="1665" height="839" alt="image" src="https://github.com/user-attachments/assets/7bfd6394-3395-4743-b9d7-de8bf8bd7fe5" />
+
 
 Let's examine each component in the System Design:
 
@@ -294,6 +310,9 @@ Let's examine each component in the System Design:
 
 Within the payment system, multiple interconnected services collaborate to execute a transaction. In a distributed system, requests can be lost over the network, or a service might be temporarily unavailable.
 
+<img width="883" height="810" alt="image" src="https://github.com/user-attachments/assets/da0e2eb9-cf38-4b7c-a829-224d63955a96" />
+
+
 To ensure transaction completion, we can use a pub-sub system such as Apache Kafka. When a payment is initiated, we publish an event to a Kafka topic. Consumer services process these events, and a message is only marked as consumed after the transaction is successfully processed and recorded in the wallet and ledger databases. This ensures that no payment events are lost.
 
 ### [Transient Failures](#transient-failures)
@@ -315,8 +334,19 @@ The retry strategy helps overcome temporary network issues. We can implement exp
 Timeouts prevent a service from waiting indefinitely for a response. If a response takes too long, the operation is terminated. However, this can create ambiguity. For example, if a customer's payment request times out, it's unclear what happened on the backend:
 
 - The payment was processed successfully, but the response was lost on its way back to the client.
+
+<img width="1231" height="591" alt="image" src="https://github.com/user-attachments/assets/f5ee694b-47af-4fe6-9f5e-880845c2f0b9" />
+
+  
 - The request is still being processed, but the client-side timeout was reached.
+
+<img width="1100" height="561" alt="image" src="https://github.com/user-attachments/assets/6f97dd3a-ad31-4dd5-8b46-0a96c788f937" />
+
+  
 - The request was lost in transit and never reached the payment service.
+
+<img width="1002" height="558" alt="image" src="https://github.com/user-attachments/assets/559e7e8d-2b69-4d14-ac52-1134c9ba40c9" />
+
 
 In these scenarios, the client cannot know the true status of the payment. If the customer retries the operation, they could be charged twice. This problem is solved using idempotency. An idempotent API ensures that repeating the same request multiple times produces the same result as the initial request, preventing duplicate charges. This is typically implemented by having the client generate a unique request ID (an idempotency key) that the server uses to recognize and de-duplicate retried requests.
 
