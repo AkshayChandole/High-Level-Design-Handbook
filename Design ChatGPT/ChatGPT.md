@@ -1,6 +1,6 @@
 # System Design: ChatGPT System
 
-## What is ChatGPT?
+## [What is ChatGPT?](#what-is-chatgpt)
 
 ChatGPT is an advanced conversational application built on a sophisticated AI language model developed by OpenAI. It understands natural language and generates human-like text to assist with various communication tasks. ChatGPT helps users by:
 
@@ -13,18 +13,18 @@ ChatGPT is an advanced conversational application built on a sophisticated AI la
 
 ChatGPT-like systems are notable for interpreting incomplete or ambiguous inputs to provide relevant, context-aware responses. Instead of relying on predefined answers, these systems use generative AI and large language models to analyze intent and patterns.
 
-## Requirements
+## [Requirements](#requirements)
 
 The backend design must address the following functional and non-functional requirements:
 
-### Functional Requirements
+### [Functional Requirements](#functional-requirements)
 
 - **Dialogue management:** Interpret user input, maintain context, and generate relevant, human-like responses.
 - **Natural language understanding (NLU):** Identify intent and extract key entities from user input.
 - **Personalization:** Adapt to user preferences and history to provide tailored interactions.
 - **Feedback:** Improve accuracy and performance over time using user feedback.
 
-### Non-Functional Requirements
+### [Non-Functional Requirements](#non-functional-requirements)
 
 - **Scalability:** Handle increasing user traffic and workloads efficiently.
 - **Availability:** Ensure consistent uptime for users.
@@ -35,7 +35,7 @@ The backend design must address the following functional and non-functional requ
 <img width="907" height="376" alt="image" src="https://github.com/user-attachments/assets/9e0e68f8-d192-430c-a4c7-92e61747e88f" />
 
 
-## Resource Estimation
+## [Resource Estimation](#resource-estimation)
 
 We will use the following assumptions to estimate resources for a large user base:
 
@@ -44,7 +44,7 @@ We will use the following assumptions to estimate resources for a large user bas
 - **Request size:** Approximately 2 KB (mostly short text prompts)
 - **Response size:** Approximately 5 KB (AI-generated replies are typically longer)
 
-### Number of Servers Estimation
+### [Number of Servers Estimation](#number-of-servers-estimation)
 
 First, we calculate the average requests per second (RPS) based on the daily volume:
 
@@ -54,7 +54,7 @@ Using a standard web server capacity of 64,000 RPS (from the back-of-the-envelop
 
 $$\text{Servers needed at peak load} = \frac{150 \text{ million}}{64{,}000} \approx 2{,}343 \text{ servers}$$
 
-### Storage Estimation
+### [Storage Estimation](#storage-estimation)
 
 Storage requirements depend on the total number of requests and the data size per request:
 
@@ -72,11 +72,11 @@ $$3 \text{ TB/day} \times 365 \text{ days/year} = 1{,}095 \text{ TB/year} \appro
 
 > **Note:** This estimate covers text-based request data only. Actual storage will be higher when accounting for response data, conversation history, user metadata, and model artifacts.
 
-### Bandwidth Estimation
+### [Bandwidth Estimation](#bandwidth-estimation)
 
 We calculate bandwidth separately for incoming and outgoing traffic.
 
-#### Incoming Bandwidth
+#### [Incoming Bandwidth](#incoming-bandwidth)
 
 Incoming bandwidth is determined by the number of incoming requests per second and the size of each request. Since most user requests to ChatGPT are relatively short, we assume an average request size of 2 KB.
 
@@ -86,7 +86,7 @@ $$\text{Requests/sec} = \frac{1{,}500 \text{ million}}{86{,}400 \text{ sec}} \ap
 
 $$\text{Incoming bandwidth} = 17{,}361 \times 2 \text{ KB} \approx 34.7 \text{ MB/s} \approx 277.8 \text{ Mbps}$$
 
-#### Outgoing Bandwidth
+#### [Outgoing Bandwidth](#outgoing-bandwidth)
 
 Outgoing bandwidth depends on the number of responses per second and the size of each response. As responses are generated dynamically based on user input, response sizes vary. For estimation, assume an average response size of 5 KB per request.
 
@@ -96,7 +96,7 @@ $$\text{Outgoing bandwidth} = 17{,}361 \times 5 \text{ KB} \approx 86.8 \text{ M
 
 Outgoing bandwidth consumption is significantly higher due to the larger size of generated responses.
 
-## Building Blocks
+## [Building Blocks](#building-blocks)
 
 Based on our requirements and estimations, we will use the following core components:
 
@@ -108,7 +108,7 @@ Based on our requirements and estimations, we will use the following core compon
 
 Additional components, such as an API gateway and ZooKeeper, are also critical.
 
-## High-Level Design
+## [High-Level Design](#high-level-design)
 
 The high-level design illustrates how the system handles real-time conversations. The following workflow outlines the component interactions:
 
@@ -131,7 +131,7 @@ User feedback is essential for fine-tuning the system, enhancing its accuracy, a
 >
 > A hybrid approach proves to be more effective in maintaining performance, relevance, and scalability.
 
-## Detailed Design
+## [Detailed Design](#detailed-design)
 
 Requests are routed through the API gateway to a load balancer, which distributes traffic across application servers. The system relies on the following core components:
 
@@ -157,7 +157,7 @@ Requests are routed through the API gateway to a load balancer, which distribute
 >
 > This information is then sent to the payment system for user approval to ensure that the user is fully informed and consents to the charge before finalizing the transaction.
 
-### Workflow of the ChatGPT System
+### [Workflow of the ChatGPT System](#workflow-of-the-chatgpt-system)
 
 When a user enters a prompt through a web or mobile interface, the request first reaches the API gateway, which manages authentication, authorization, and rate limiting. From there, a load balancer distributes the request across multiple application servers to ensure efficient handling.
 
@@ -169,11 +169,11 @@ If the request involves a paid feature, the payment processing system logs the t
 
 Finally, the response is sent back to the user. If the user provides feedback, it is collected via the feedback module and stored in the feedback database. Structured feedback (e.g., ratings or thumbs up/down) is stored in a relational database (e.g., PostgreSQL or MySQL). In contrast, unstructured feedback (such as comments or session metadata) is stored in a document database, such as MongoDB. This data helps improve the system over time through analysis and model updates.
 
-## Achieving Requirements
+## [Achieving Requirements](#achieving-requirements)
 
 The following sections evaluate the design against the previously identified functional and non-functional requirements.
 
-### Achieving Functional Requirements
+### [Achieving Functional Requirements](#achieving-functional-requirements)
 
 | Functional Requirement | Techniques |
 | --- | --- |
@@ -182,7 +182,7 @@ The following sections evaluate the design against the previously identified fun
 | **Personalization** | User profile stores preferences and history. Model server uses this data for tailored responses. |
 | **Feedback** | Feedback module logs user ratings and comments, which are used to refine the system through offline training and model improvements. |
 
-### Achieving Non-Functional Requirements
+### [Achieving Non-Functional Requirements](#achieving-non-functional-requirements)
 
 | Non-Functional Requirement | Techniques |
 | --- | --- |
@@ -191,7 +191,7 @@ The following sections evaluate the design against the previously identified fun
 | **Low latency** | Redis caching accelerates responses for frequently queried data. Vector database efficiently retrieves contextual information, reducing unnecessary recomputation. CDN reduces latency by caching and serving static content closer to users. |
 | **Security and privacy** | API gateway enforces authentication, authorization, and rate limiting. Payment processing system ensures secure financial transactions. End-to-end encryption secures requests and responses from interception. MongoDB stores user data with encryption and access control. |
 
-## Conclusion
+## [Conclusion](#conclusion)
 
 In this chapter, we designed a ChatGPT-like system, covering the system architecture and detailed workflows. We examined how components like caching, content moderation, and distributed model hosting ensure scalability, reliability, and security.
 
